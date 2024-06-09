@@ -1,3 +1,29 @@
 .card-adivinha{
-    
+    background-color: white;
+    border-radius: 10px;
+    // width: 150px;
+    height: 150px;
+}
+
+.front, .back{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-image{
+    margin-left: 10px;
+    max-width: 100px;
+    height: auto;
+    margin-top: 10px;
+}
+
+.title {
+    font-size: larger;
+}
+.back-title {
+    width: 50%;
+    margin: auto;
+    font-size: larger;
 }

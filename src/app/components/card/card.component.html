@@ -1,6 +1,12 @@
-<p>card works!</p>
-
-<div class="card-adivinha">
-    <img src="assets/images/dog.png" alt="">
+<div class="card-adivinha" (click)="toggleFlip()">
+    @if (flipped) {
+    <div class="front">
+        <div class="title">{{title}}</div>
+        <img class="card-image" src={{imageUrl}} alt="">
+    </div>
+    } @else {
+    <div class="back">
+        <div class="back-title">{{index}}</div>
+    </div>
+    }
 </div>
-<!-- <input type="image" src="assets/images/cat.png" class="card-adivinha"/> -->

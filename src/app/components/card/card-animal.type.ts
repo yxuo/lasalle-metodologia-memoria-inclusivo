@@ -1,1 +1,1 @@
-export type CardAnimal = 'cao' | 'gato';
+export type CardAnimal = 'cao' | 'gato' | 'passaro' | 'vaca' | 'cavalo';

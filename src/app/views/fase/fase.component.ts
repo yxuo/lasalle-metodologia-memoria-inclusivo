@@ -1,5 +1,5 @@
 import { NgFor } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { CardAnimal } from '../../components/card/card-animal.type';
 import { CardComponent } from '../../components/card/card.component';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -28,7 +28,7 @@ export class FaseComponent implements OnInit {
   wallType?: WallType;
   queryParams: any;
   level: number = -1;
-  levelTitle = "";
+  levelTitle = '';
 
   private readonly pairNames: CardAnimal[] = [
     'cao',
@@ -37,6 +37,13 @@ export class FaseComponent implements OnInit {
     'cavalo',
     'vaca',
   ];
+
+  private readonly cardIndexesMap = {
+    level1: [4, 5, 6, 1, 2, 3],
+    level2: [6, 7, 8, 4, 5, 6, 1, 2],
+    level3: [7, 8, 9, 4, 5, 6, 1, 2, 3, 0],
+  };
+  private cardIndexes: number[] = [];
 
   constructor(private _route: ActivatedRoute, private _router: Router) {}
 
@@ -49,6 +56,15 @@ export class FaseComponent implements OnInit {
       if (this.queryParams.nivel) {
         this.level = Number(this.queryParams?.nivel);
         this.levelTitle = `Fase ${this.level}`;
+
+                // índices dos cards
+        this.cardIndexes = this.cardIndexesMap.level1;
+        if (this.level === 2) {
+          this.cardIndexes = this.cardIndexesMap.level2;
+        } else if (this.level === 3) {
+          this.cardIndexes = this.cardIndexesMap.level3;
+        }
+        this.setLevelIndexes();
         this.sortCards(this.level);
       }
 
@@ -57,6 +73,43 @@ export class FaseComponent implements OnInit {
         this.goToLevel(1);
       }
     });
+  }
+
+  private setLevelIndexes() {
+    // índices dos cards
+    this.cardIndexes = this.cardIndexesMap.level1;
+    if (this.level === 2) {
+      this.cardIndexes = this.cardIndexesMap.level2;
+    } else if (this.level === 3) {
+      this.cardIndexes = this.cardIndexesMap.level3;
+    }
+  }
+
+  @HostListener('window:keyup', ['$event'])
+  keyEvent(event: KeyboardEvent) {
+    let cardNumber = +event.key;
+    const card = this.cards.filter((i) => i.index === cardNumber)[0] as Card | undefined;
+    const isNumber = event.code.match(/^(Numpad|Digit)[0-9]$/g);
+    if (isNumber && card) {
+      if (card.flipped) {
+        // Card já virado, nada a fazer
+      } else {
+        card.flipped = true;
+      }
+      this.selectCard(card);
+    }
+
+    if (event.code === 'Enter' || event.code === 'Space') {
+      if (this.wallType) {
+        this.clickWall();
+      }
+    }
+
+    if (event.code === 'Escape') {
+      if (!this.wallType) {
+        this.goToMenu();
+      }
+    }
   }
 
   goToLevel(level: number) {
@@ -90,6 +143,7 @@ export class FaseComponent implements OnInit {
   closeWall() {
     const wall = document.getElementById('wall') as HTMLElement;
     wall.classList.add('hidden');
+    this.wallType = undefined;
   }
 
   clickWall() {
@@ -135,7 +189,10 @@ export class FaseComponent implements OnInit {
         this.rightCards.push(card1);
         this.rightCards.push(card2);
         this.selectedCards = [];
-      } else {
+      }
+
+      // Senão lança aviso
+      else {
         this.openWall(
           `Os cartões ${card1.index}: ${card1.card} e ${card2.index}: ${card2.card} são diferentes.`,
           'incorrectCard'
@@ -145,6 +202,9 @@ export class FaseComponent implements OnInit {
 
     // Se todos os cards foram acertados, próxima fase
     if (this.rightCards.length === this.cards.length) {
+      this.selectedCards = [];
+      this.rightCards = [];
+
       if (this.level >= 3) {
         this.openWall(`Parabéns! Jogo finalizado.`, 'lastLevelFinished');
       } else {
@@ -157,6 +217,7 @@ export class FaseComponent implements OnInit {
   }
 
   sortCards(level: number) {
+    // Nível 1 = 3 pares, nível 2 = 4, nível 3 = 5...
     const addPairs = level - 1;
     const pairs = 3 + addPairs;
     const sortedPairs = [...this.pairNames];
@@ -168,10 +229,21 @@ export class FaseComponent implements OnInit {
     for (const i in cards) {
       this.cards.push({
         card: cards[i],
-        index: Number(i) + 1,
+        index: +i,
         disabled: false,
         flipped: false,
       });
+    }
+
+    for (const i in this.cards) {
+      const card = this.cards[i];
+      card.index = this.cardIndexes[i];
+    }
+    if (this.cards.length === 10) {
+      const card10 = this.cards.find((i) => i.index === 10);
+      if (card10) {
+        card10.index = 0;
+      }
     }
   }
 }

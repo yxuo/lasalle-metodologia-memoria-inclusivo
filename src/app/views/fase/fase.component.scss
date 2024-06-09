@@ -4,12 +4,18 @@
 }
 
 #cards-container{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    // grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
+    flex-flow: wrap;
     padding: 1rem;
     margin-left: auto;
     margin-right: auto;
+}
+
+.app-card{
+    flex-grow: 0;
+    width: 120px;
 }
 
 #levelTitle {

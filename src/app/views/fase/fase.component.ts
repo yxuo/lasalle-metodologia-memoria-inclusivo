@@ -40,7 +40,7 @@ export class FaseComponent implements OnInit {
 
   private readonly cardIndexesMap = {
     level1: [4, 5, 6, 1, 2, 3],
-    level2: [6, 7, 8, 4, 5, 6, 1, 2],
+    level2: [7, 8, 9, 4, 5, 6, 1, 2],
     level3: [7, 8, 9, 4, 5, 6, 1, 2, 3, 0],
   };
   private cardIndexes: number[] = [];

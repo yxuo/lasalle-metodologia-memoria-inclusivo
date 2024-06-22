@@ -45,7 +45,7 @@ export class FaseComponent implements OnInit {
   };
   private cardIndexes: number[] = [];
 
-  constructor(private _route: ActivatedRoute, private _router: Router) {}
+  constructor(private _route: ActivatedRoute, private _router: Router) { }
 
   ngOnInit() {
     // Routes
@@ -57,7 +57,7 @@ export class FaseComponent implements OnInit {
         this.level = Number(this.queryParams?.nivel);
         this.levelTitle = `Fase ${this.level}`;
 
-                // índices dos cards
+        // índices dos cards
         this.cardIndexes = this.cardIndexesMap.level1;
         if (this.level === 2) {
           this.cardIndexes = this.cardIndexesMap.level2;

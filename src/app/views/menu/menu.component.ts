@@ -25,4 +25,8 @@ export class MenuComponent {
       },
     });
   }
+
+  navigateTo(param: string) {
+    this._router.navigate([param]);
+  }
 }

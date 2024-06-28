@@ -13,7 +13,7 @@ export class SpeechService {
     }
   }
 
-  speak(text: string, lang: string = 'pt-BR', rate: number = 3): void {
+  speak(text: string, lang: string = 'pt-BR', rate: number = 2): void {
     if (this.synth) {
       if (this.synth.speaking) {
         console.error('SpeechSynthesisUtterance.speaking');

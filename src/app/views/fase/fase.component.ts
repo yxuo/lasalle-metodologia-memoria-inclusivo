@@ -219,14 +219,18 @@ export class FaseComponent implements OnInit {
       this.rightCards = [];
 
       if (this.level >= 3) {
+        setTimeout(() => {
+          this.speechService.speak('Parabéns! Jogo finalizado.');
+        }, 2000);
         this.openWall(`Parabéns! Jogo finalizado.`, 'lastLevelFinished');
-        this.speechService.speak('Parabéns! Jogo finalizado.');
       } else {
+        setTimeout(() => {
+          this.speechService.speak(`Parabéns! Fase ${this.level} concluída.`);
+        }, 2000);
         this.openWall(
           `Parabéns! Fase ${this.level} concluída.`,
           'faseFinished'
         );
-        this.speechService.speak(`Parabéns! Fase ${this.level} concluída.`);
       }
     }
   }

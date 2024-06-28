@@ -1,8 +1,21 @@
-<main class="main">
-    <div class="content">
-        <h1>BLIND MEMORY</h1>
-        <button class="iniciarJogo" (click)="navigateTo('fase')"  routerLink="/fase" routerLinkActive="active">
+<div class="content">
+    <div class="content-wrapper">
+        <img src="../../../assets/images/jogo-da-memoria.png" alt="imagem representando jogo da memória">
+        <h1>SENSORY RECALL</h1>
+        <p>
+            Bem-vindo ao Sensory Recall!
+            <br><br>
+            Este é um jogo de memória que foi projetado para ser jogado com um leitor de tela ou com o teclado.
+            <br><br>
+            Instruções:
+        </p>
+        <ul>
+            <li>Use o teclado numérico para selecionar as cartas.</li>
+            <li>Memorize as posições e tente encontrar os pares correspondentes.</li>
+            <li>O jogo oferece feedback audível para cada ação e combinação.</li>
+        </ul>
+        <button [routerLink]="'/fase'" routerLinkActive="active">
             Iniciar Jogo
         </button>
     </div>
-</main>
+</div>

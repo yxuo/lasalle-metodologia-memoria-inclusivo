@@ -2,7 +2,9 @@ import { NgFor } from '@angular/common';
 import { Component, HostListener, OnInit } from '@angular/core';
 import { CardAnimal } from '../../components/card/card-animal.type';
 import { CardComponent } from '../../components/card/card.component';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { SoundService } from '../../services/sound.service';
+import { SpeechService } from '../../services/speech.service';
 
 interface Card {
   card: CardAnimal;
@@ -16,7 +18,8 @@ type WallType = 'incorrectCard' | 'faseFinished' | 'lastLevelFinished';
 @Component({
   selector: 'app-fase',
   standalone: true,
-  imports: [CardComponent, NgFor],
+  imports: [CardComponent, NgFor, RouterModule],
+  providers: [SpeechService],
   templateUrl: './fase.component.html',
   styleUrl: './fase.component.scss',
 })
@@ -31,9 +34,9 @@ export class FaseComponent implements OnInit {
   levelTitle = '';
 
   private readonly pairNames: CardAnimal[] = [
-    'cao',
+    'cachorro',
     'gato',
-    'passaro',
+    'pássaro',
     'cavalo',
     'vaca',
   ];
@@ -45,7 +48,12 @@ export class FaseComponent implements OnInit {
   };
   private cardIndexes: number[] = [];
 
-  constructor(private _route: ActivatedRoute, private _router: Router) { }
+  constructor(
+    private _route: ActivatedRoute,
+    private _router: Router,
+    private soundService: SoundService,
+    private speechService: SpeechService
+  ) { }
 
   ngOnInit() {
     // Routes
@@ -183,7 +191,10 @@ export class FaseComponent implements OnInit {
     if (this.selectedCards.length === 2) {
       const card1 = this.selectedCards[0];
       const card2 = this.selectedCards[1];
+
       if (card1.card === card2.card) {
+        this.soundService.playSuccessSound();
+        this.speechService.speak('Par encontrado');
         card1.disabled = true;
         card2.disabled = true;
         this.rightCards.push(card1);
@@ -193,10 +204,12 @@ export class FaseComponent implements OnInit {
 
       // Senão lança aviso
       else {
+        this.soundService.playErrorSound();
         this.openWall(
-          `Os cartões ${card1.index}: ${card1.card} e ${card2.index}: ${card2.card} são diferentes.`,
+          `Os cartões ${card1.index}: ${card1.card} e ${card2.index}: ${card2.card} são diferentes. Clique na tela para continuar`,
           'incorrectCard'
         );
+        this.speechService.speak(`Os cartões ${card1.index}: ${card1.card} e ${card2.index}: ${card2.card} são diferentes. Clique na tela para continuar`);
       }
     }
 
@@ -207,11 +220,13 @@ export class FaseComponent implements OnInit {
 
       if (this.level >= 3) {
         this.openWall(`Parabéns! Jogo finalizado.`, 'lastLevelFinished');
+        this.speechService.speak('Parabéns! Jogo finalizado.');
       } else {
         this.openWall(
           `Parabéns! Fase ${this.level} concluída.`,
           'faseFinished'
         );
+        this.speechService.speak(`Parabéns! Fase ${this.level} concluída.`);
       }
     }
   }

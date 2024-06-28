@@ -3,16 +3,18 @@
         <div id="wall" class="hidden" (click)="clickWall()">
             <div id="wall-title"></div>
         </div>
-        <div id="levelTitle">{{levelTitle}}</div>
+        <div id="levelTitle">
+          <h1 >{{levelTitle}}</h1>
+          <p>Selecione duas cartas para achar seus pares.</p>
+        </div>
         <div id="cards-container">
             <app-card class="app-card" *ngFor="let i of cards" [animal]="i.card" [index]="i.index"
                 [disabled]="i.disabled" [flipped]="i.flipped" (flipEvent)="updateFlipState(i, $event)"
                 (click)="selectCard(i)" />
         </div>
-        <div id="menuButtons">
-            <div class="menuButton">
-                <a href="/" routerLinkActive="active">Menu</a>
-            </div>
-        </div>
+        <button
+          class="menuButton"
+          [routerLink]="'/'"
+        >TELA INICIAL</button>
     </div>
 </main>

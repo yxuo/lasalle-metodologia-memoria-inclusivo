@@ -2,7 +2,7 @@
     @if (flipped) {
     <div class="front">
         <div class="title">{{title}}</div>
-        <img class="card-image" src={{imageUrl}} alt="">
+        <img class="card-image" [src]="imageUrl" [alt]="imageAlt">
     </div>
 } @else {
     <div class="back">

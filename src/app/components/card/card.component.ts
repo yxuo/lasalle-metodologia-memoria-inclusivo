@@ -18,26 +18,36 @@ export class CardComponent {
 
   title = "";
   imageUrl = "";
+  imageAlt = "";
 
   private readonly titleMap = {
-    'cao': 'cão',
+    'cachorro': 'cão',
     'gato': 'gato',
-    'passaro': 'pássaro',
+    'pássaro': 'pássaro',
     'vaca': 'vaca',
     'cavalo': 'cavalo'
   }
 
   private readonly imageMap = {
-    'cao': 'assets/images/cao.png',
+    'cachorro': 'assets/images/cao.png',
     'gato': 'assets/images/gato.png',
-    'passaro': 'assets/images/passaro.png',
+    'pássaro': 'assets/images/passaro.png',
     'vaca': 'assets/images/vaca.png',
     'cavalo': 'assets/images/cavalo.png'
   }
-  
+
+  private readonly imageAltMap = {
+    'cachorro': 'carta com imagem de cachorro',
+    'gato': 'carta com imagem de gato',
+    'pássaro': 'carta com imagem de pássaro',
+    'vaca': 'carta com imagem de vaca',
+    'cavalo': 'carta com imagem de cavalo'
+  }
+
   ngOnInit() {
     this.title = this.titleMap[this.animal];
     this.imageUrl = this.imageMap[this.animal];
+    this.imageAlt = this.imageAltMap[this.animal];
   }
 
   toggleFlip() {
@@ -53,5 +63,5 @@ export class CardComponent {
   unflip() {
     this.flipped = false;
   }
-  
+
 }

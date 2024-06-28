@@ -1,5 +1,10 @@
 .content{
-    background-color: lightgrey;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #eee;
+    gap: 30px;
     height: 100vh;
 }
 
@@ -19,11 +24,9 @@
 }
 
 #levelTitle {
-    font-size: 30px;
     text-align: center;
-    font-weight: bolder;
-    text-shadow: black 1px solid;
-    margin-bottom: 20px;
+
+    h1, p { margin: 0; }
 }
 
 #wall{
@@ -42,7 +45,10 @@
 }
 
 #wall-title {
-    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
     font-size: 30px;
     text-align: center;
     font-weight: bolder;
@@ -55,12 +61,19 @@
 }
 
 .menuButton{
-    background-color: white;
-    border-radius: 10px;
-    width: 100px;
-    height: 40px;
-    display: flex;
-    align-items: center;
+    padding: 15px;
+    font-size: 16px;
+    background: #4682B4;
+    color: #fff;
+    border: none;
+    border-radius: 100px;
+    text-transform: uppercase;
+    font-weight: 700;
+    cursor: pointer;
+
+    &:hover {
+        opacity: 0.8;
+    }
 }
 
 #menuButtons{
@@ -72,5 +85,6 @@
 
 #cards-container{
     background-color: lightskyblue;
-    width: 400px;
+    max-width: 400px;
+    border-radius: 20px;
 }

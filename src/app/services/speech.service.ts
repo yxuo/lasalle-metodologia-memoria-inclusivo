@@ -13,7 +13,7 @@ export class SpeechService {
     }
   }
 
-  speak(text: string, lang: string = 'pt-BR'): void {
+  speak(text: string, lang: string = 'pt-BR', rate: number = 3): void {
     if (this.synth) {
       if (this.synth.speaking) {
         console.error('SpeechSynthesisUtterance.speaking');
@@ -23,6 +23,7 @@ export class SpeechService {
       if (text !== '') {
         const utterThis = new SpeechSynthesisUtterance(text);
         utterThis.lang = lang;
+        utterThis.rate = rate; // Set the speech rate
         utterThis.onend = () => {
           console.log('SpeechSynthesisUtterance.onend');
         };
@@ -34,6 +35,7 @@ export class SpeechService {
         this.synth.speak(utterThis);
       }
     } else {
+      console.error('Speech synthesis not supported.');
     }
   }
 }
